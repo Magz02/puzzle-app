@@ -1,4 +1,4 @@
-<form class="example-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+<form class="example-form" #loginForm="ngForm" (ngSubmit)="onSubmit()" >
     
   <mat-form-field appearance="fill" class="example-full-width">
         <mat-label>Username (E-Mail Address)</mat-label>
@@ -23,4 +23,8 @@
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">Login</button>
+
+      <mat-error *ngIf="(email.value === '' || password === '') && hasSubmitted">Please fill all required fields!</mat-error>
+      <p style="color: green" *ngIf="showmessage && hasSubmitted && email.value !== '' && password !== ''">Login successful.</p>
+      <mat-error *ngIf="!showmessage && hasSubmitted && email.value.length > 0 && password.length > 0">Login failed.</mat-error>
 </form>
