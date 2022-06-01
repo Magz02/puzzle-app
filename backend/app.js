@@ -1,7 +1,8 @@
-var express = require('express');
-var cors = require('cors');
+let express = require('express');
+let cors = require('cors');
+let db = require('./db');
 
-var app = express();
+let app = express();
 
 app.use(cors());
 
@@ -12,15 +13,35 @@ app.use(express.urlencoded({
 
 // POST route for login
 app.post('/login', (req, res, next) => {
-    const loginData = JSON.stringify(req.body);
+    const loginData = req.body;
     console.log(loginData);
 
     // login...
+    let credentials = db.login(loginData.email, loginData.password);
+
+    if (credentials === null) {
+        res.status(400).json({
+            message: 'Invalid credentials'
+        });
+    } else {
+        res.status(200).json({
+            message: 'Login',
+            token: credentials.token,
+            username: credentials.username
+        });
+    }
+});
+
+app.post('/signup', (req, res, next) => {
+    const signupData = req.body;
+    console.log(signupData);
+
+    // signup...
 
     res.status(200).json({
-        message: 'Hello Login from express.js'
+        message: 'Sign-Up from express.js'
     });
-});
+}) ;
 
 module.exports = app;
 

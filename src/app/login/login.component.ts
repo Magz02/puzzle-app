@@ -16,14 +16,9 @@ export class LoginComponent implements OnInit {
   password = '';
   showmessage = false;
   hasSubmitted = false;
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   
   constructor(
-    private loginservice : LoginService,
-    private http: HttpClient
+    private loginservice : LoginService
   ) { }
 
   ngOnInit(): void {
@@ -37,10 +32,6 @@ export class LoginComponent implements OnInit {
       next : b => this.showmessage = b
     });
     this.hasSubmitted = true;
-    //idk what should be the second argument  * doesn't work *
-    this.http.post<{ message: string }>('http://localhost:3000/login', this.loginservice, this.httpOptions).subscribe((responseData) =>{
-      console.log(responseData.message);
-    });
   }
 
   getErrorMessage() {

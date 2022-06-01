@@ -1,5 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm, Validators, NgModelGroup } from '@angular/forms';
+import { json, response } from 'express';
 
 @Component({
   selector: 'app-signup',
@@ -17,19 +19,37 @@ export class SignupComponent implements OnInit {
   city = '';
   postcode = '';
   company = 'FH Technikum Wien';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
   
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit() {
     //console.log(form.value);
     console.log(this.company);
     console.log(this.email.value);
     if (this.email.hasError('required')) {
       //cooles Zeug
     }
+    let formJson = {
+      email: this.email.value,
+      password1: this.password1,
+      password2: this.password2,
+      street: this.street,
+      city: this.city,
+      postcode: this.postcode,
+      company: this.company
+    };
+    this.http.post<any>('http://localhost:3000/signup', formJson, this.httpOptions).subscribe((responseData) => {
+      console.log(responseData);
+    });
   }
 
   getErrorMessage() {
