@@ -57,5 +57,8 @@
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">Sign-Up!</button>
-    <mat-error *ngIf="email.value === '' || password1.length === 0 || password2.length === 0">Please fill all required fields!</mat-error>
+
+    <mat-error *ngIf="(email.value === '' || password1.length === 0 || password2.length === 0) && hasSubmitted">Please fill all required fields!</mat-error>
+    <p style="color: green" *ngIf="showmessage && hasSubmitted && email.value !== '' && password1 !== '' && password2 !== ''">Sign-Up successful.</p>
+    <mat-error *ngIf="!showmessage && hasSubmitted && ((email.value.length > 0 && password1.length > 0 && password2.length > 0) || (password1 != password2))">Sign-up failed.</mat-error>
 </form>

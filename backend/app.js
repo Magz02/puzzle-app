@@ -37,10 +37,17 @@ app.post('/signup', (req, res, next) => {
     console.log(signupData);
 
     // signup...
+    let signedUp = db.signup(signupData.email, signupData.password);
 
-    res.status(200).json({
-        message: 'Sign-Up from express.js'
-    });
+    if (signedUp) {
+        res.status(200).json({
+            message: 'Signed up'
+        });
+    } else {
+        res.status(400).json({
+            message: 'Invalid credentials'
+        });
+    }
 }) ;
 
 module.exports = app;

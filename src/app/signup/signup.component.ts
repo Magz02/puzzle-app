@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm, Validators, NgModelGroup } from '@angular/forms';
 import { json, response } from 'express';
+import { SignupService } from '../signup.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,13 +20,16 @@ export class SignupComponent implements OnInit {
   city = '';
   postcode = '';
   company = 'FH Technikum Wien';
+  hasSubmitted = false;
+  showmessage = false;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private signupservice : SignupService
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +42,8 @@ export class SignupComponent implements OnInit {
     if (this.email.hasError('required')) {
       //cooles Zeug
     }
-    let formJson = {
+
+    /*let formJson = {
       email: this.email.value,
       password1: this.password1,
       password2: this.password2,
@@ -46,10 +51,14 @@ export class SignupComponent implements OnInit {
       city: this.city,
       postcode: this.postcode,
       company: this.company
-    };
-    this.http.post<any>('http://localhost:3000/signup', formJson, this.httpOptions).subscribe((responseData) => {
-      console.log(responseData);
-    });
+    };*/
+
+    if (this.password1 === this.password2) {
+      this.signupservice.signup(this.email.value, this.password1).subscribe({
+        next: b => this.showmessage = b
+      });
+      this.hasSubmitted = true;
+    } 
   }
 
   getErrorMessage() {

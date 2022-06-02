@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class SignupService {
 
   constructor(
     private http: HttpClient
@@ -15,8 +15,8 @@ export class LoginService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  login(email: string, password: string) : Observable<boolean> {
-    console.log("loginservice works");
-    return this.http.post<any>('http://localhost:3000/login', { email: email, password: password }, this.httpOptions);
+  signup(email: string, password: string) : Observable<boolean> {
+    console.log("signupservice works");
+    return this.http.post<any>('http://localhost:3000/signup', { email: email, password: password }, this.httpOptions);
   }
 }
