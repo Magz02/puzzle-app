@@ -22,6 +22,7 @@ export class SignupComponent implements OnInit {
   company = 'FH Technikum Wien';
   hasSubmitted = false;
   showmessage = false;
+  token = ''
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -55,6 +56,7 @@ export class SignupComponent implements OnInit {
 
     if (this.password1 === this.password2) {
       this.signupservice.signup(this.email.value, this.password1).subscribe({
+        //next: credentials => credentials.token = this.token
         next: b => this.showmessage = b
       });
       this.hasSubmitted = true;

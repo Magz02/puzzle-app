@@ -1,3 +1,4 @@
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
@@ -29,7 +30,12 @@ export class LoginComponent implements OnInit {
     console.log(this.password);
     console.log(this.hasSubmitted);
     this.loginservice.login(this.email.value, this.password).subscribe({
-      next : b => this.showmessage = b
+      next: credentials => {
+          console.log(credentials);
+          this.showmessage = true;
+          console.log(credentials.token);
+          localStorage.setItem('token', credentials.token);
+        }
     });
     this.hasSubmitted = true;
   }

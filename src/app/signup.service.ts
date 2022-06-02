@@ -17,6 +17,8 @@ export class SignupService {
 
   signup(email: string, password: string) : Observable<boolean> {
     console.log("signupservice works");
-    return this.http.post<any>('http://localhost:3000/signup', { email: email, password: password }, this.httpOptions);
+    console.log("Email in signup: " + email);
+    console.log("Password in signup: " + password);
+    return this.http.post<boolean>('http://localhost:3000/signup', { username: email, password: password }, this.httpOptions);
   }
 }
