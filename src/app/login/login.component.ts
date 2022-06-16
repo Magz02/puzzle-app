@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
           this.showmessage = true;
           console.log(credentials.token);
           localStorage.setItem('token', credentials.token);
+          console.log(credentials.username)
+          localStorage.setItem('username', credentials.username);
         }
     });
     this.hasSubmitted = true;

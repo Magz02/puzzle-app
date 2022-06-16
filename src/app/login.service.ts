@@ -15,8 +15,8 @@ export class LoginService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  login(email: string, password: string) : Observable<{message: string, token: string}> {
+  login(email: string, password: string) : Observable<{message: string, token: string, username: string}> {
     console.log("loginservice works");
-    return this.http.post<{message: string, token: string}>('http://localhost:3000/login', { email: email, password: password }, this.httpOptions);
+    return this.http.post<{message: string, token: string, username: string}>('http://localhost:3000/login', { username: email, password: password }, this.httpOptions);
   }
 }
